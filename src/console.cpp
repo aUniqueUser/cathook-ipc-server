@@ -219,7 +219,7 @@ json connect(const json& args) {
 		throw std::runtime_error("already connected");
 	}
 	try {
-		peer = new peer_t(has_key(args, "server") ? args["server"].get<std::string>() : "cathook_followbot_server", false, false, true);
+		peer = new peer_t("cathook_followbot_server", false, false, true);
 		peer->Connect();
 	} catch (std::exception& ex) {
 		peer = nullptr;
