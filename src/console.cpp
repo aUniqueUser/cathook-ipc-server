@@ -67,6 +67,7 @@ json query_peer(unsigned id) {
 	result["ts_connected"] = udata.ts_connected;
 	result["ts_disconnected"] = udata.ts_disconnected;
 	result["party_size"] = udata.party_size;
+	result["namesteal_target"] = udata.namesteal_target;
 
 	result["accumulated"] = json{};
 	result["accumulated"]["kills"] = udata.accumulated.kills;

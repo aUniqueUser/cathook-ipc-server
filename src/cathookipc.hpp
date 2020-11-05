@@ -65,6 +65,7 @@ struct user_data_s
         char mapname[32];
 	} ingame;
     int party_size;
+    int namesteal_target;
 };
 
 namespace ipc_commands {
