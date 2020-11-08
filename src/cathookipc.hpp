@@ -66,6 +66,7 @@ struct user_data_s
 	} ingame;
     int party_size;
     int namesteal_target;
+    bool should_namesteal;
 };
 
 namespace ipc_commands {
