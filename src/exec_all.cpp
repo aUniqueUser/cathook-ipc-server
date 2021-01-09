@@ -21,22 +21,29 @@ void ReplaceString(std::string& input, const std::string& what, const std::strin
 }
 
 int main(int argc, const char** argv) {
-	std::string cmd = "";
-	if (argc < 1) return 1;
+    if (argc != 2) {
+        printf("Bad number of arguments!");
+        return 1;
+    }
 
-	for (int i = 1; i < argc; i++) {
-		cmd += (std::string(argv[i]) + " ");
-	}
+    peer_cl = new peer_t(SERVER_NAME, false, false);
+    if (!peer_cl->Connect(-1)) {
+        delete peer_cl;
+        peer_cl = nullptr;
+        printf("Failed to connect to IPC");
+        return 1;
+    }
 
-	cat_ipc::Peer<server_data_s, user_data_s> peer("cathook_followbot_server", false, false);
-	peer.Connect();
+    std::string command = std::string(argv[1]);
+    ReplaceString(command, " && ", " ; ");
+    if (command.length() >= 63) {
+        peer_cl->SendMessage(0, -1, ipc_commands::execute_client_cmd_long, command.c_str(), command.length() + 1);
+    } else {
+        peer_cl->SendMessage(command.c_str(), -1, ipc_commands::execute_client_cmd, 0, 0);
+    }
 
-	printf("ALL] %s\n", cmd.c_str());
-
-	ReplaceString(cmd, " && ", " ; ");
-	if (cmd.length() >= 63) {
-		peer.SendMessage(0, -1, ipc_commands::execute_client_cmd_long, cmd.c_str(), cmd.length() + 1);
-	} else {
-		peer.SendMessage(cmd.c_str(), -1, ipc_commands::execute_client_cmd, 0, 0);
-	}
+    printf("Executed \"%s\" on all peers", command.c_str());
+    delete peer_cl;
+    peer_cl = nullptr;
+    return 0;
 }

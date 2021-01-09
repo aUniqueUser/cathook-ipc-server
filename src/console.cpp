@@ -221,7 +221,7 @@ json connect(const json& args) {
 		throw std::runtime_error("already connected");
 	}
 	try {
-		peer = new peer_t("cathook_followbot_server", false, false, true);
+		peer = new peer_t(SERVER_NAME, false, false, true);
 		peer->Connect();
 	} catch (std::exception& ex) {
 		peer = nullptr;

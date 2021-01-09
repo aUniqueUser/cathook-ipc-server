@@ -80,4 +80,9 @@ constexpr unsigned start_moving = 6;
 
 }
 
+using peer_t = cat_ipc::Peer<server_data_s, user_data_s>;
+peer_t *peer_cl{nullptr};
+
+#define SERVER_NAME "cathook_followbot_server"
+
 #endif /* CATHOOKIPC_HPP_ */
